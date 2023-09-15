@@ -205,10 +205,12 @@ class LogModule(mp_module.MPModule):
             self.log_status()
         elif args[0] == "list":
             print("Requesting log list")
+            log_id_from = 0 if len(args) < 2 else int(args[1])
+            log_id_to = 0xffff if len(args) < 3 else int(args[2])
             self.download_set = set()
             self.master.mav.log_request_list_send(self.target_system,
                                                        self.target_component,
-                                                       0, 0xffff)
+                                                       log_id_from, log_id_to)
 
         elif args[0] == "erase":
             self.master.mav.log_erase_send(self.target_system,
